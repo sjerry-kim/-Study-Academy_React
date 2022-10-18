@@ -1,0 +1,76 @@
+<!-- 2022.10.12.(수) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>react확인</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <style>
+        .react-style{
+            background-color: pink;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // 함수형태로 작성
+        function MyApp(){
+            const name = "react";
+            const count = 1;
+            const title = "react";
+            const content = undefined;
+            const style = {
+                backgroundColor: "black",
+                color:"aqua"
+            }
+            // return을 통해서 HTML 화면 출력
+            // 태그를 여러개 사용할 때 부모태그로 감싸서 사용 : 아래는 div 사용
+            // {}를 이용하여 그 안에서 변수, 자바스크립트를 사용할 수 있다
+            return (
+                <div>
+                    <h1>Hello, {name} World! hi!</h1>
+                    <p>{count+1} 반갑습니다</p>
+                    <h1>{title}에 자바스크립트를 추가해서 작성하고 있습니다</h1>
+                    {
+                    title == 'react'? (
+                        <div>
+                            <h1>리액트입니다</h1> 
+                            <p>title의 값 : {title}</p>
+                        </div>
+                        ) : (
+                        <div>
+                            <h2>리액트가 아닙니다</h2>
+                            <p>잘못된 title 값입니다</p>
+                        </div>
+                        )
+                    }
+                    {
+                        // JSX and(&&) 연산자 : 참일 때 출력
+                        title == 'react' && <h1>리액트입니다</h1>
+                    }
+                    {
+                        // JSX or(||)연산자 : 거짓(또는 undefined)일 때 출력
+                        // 값이 없다는 것을 알려주고 싶을 때 사용
+                        content || <h1>값이 undefined</h1>
+                    }
+                    <p style={style}>인라인 스타일이 적용된 모습입니다</p>
+                    { /*class가 아닌 className으로 css를 적용할 수 있음*/}
+                    <p className="react-style">CSS 파일로 작성한 클래스 적용</p>
+                    <input type="text"/>
+                </div>
+            );
+        }
+
+        // html의 root요소를 찾아서 그 곳에 가상돔을 렌더한다.
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<MyApp />);
+    </script>
+</body>
+</html>
