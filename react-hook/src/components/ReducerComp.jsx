@@ -12,6 +12,9 @@ function reducer(state, action){
       return {count : state.count-1}
     case 'zero' :
       return {count: 0}
+    // case 추가
+    case 'changeInput':
+      return {input : action.payload} // <- e.target.value 값이 payload에 들어가 있음
   }
 }
 
@@ -34,7 +37,13 @@ const ReducerComp = () => {
         MemoComp에 작성한 글이 ReducerComp의 아래 h1태그에서 수정되어 나올 수 있게 하세요
       */}
       <h1>{state.input}</h1>
-      <MemoComp state={state} dispatch={dispatch}/>
+      {/* 먼저 ReducerComp에서 실행해보기, e객체의 값을 어떻게 가져갈지 생각하기 
+      <input type="text" onChange={(e) => {
+        // setState(e.target.value) -> dispatch에서 쓸 수 있도록
+        dispatch({type: 'changeInput', payload: e.target.value})
+      } } />
+      */}
+      <MemoComp dispatch={dispatch}/>
     </div>
   );
 }
