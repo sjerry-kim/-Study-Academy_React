@@ -11,7 +11,7 @@ const RefComp = () => {
         console.log(inputRef)
         inputRef.current.style.backgroundColor = "pink"; // 접근 시 current로 접근
       }}>
-        Ref 확인
+        확인
       </button>
     </div>
   );
