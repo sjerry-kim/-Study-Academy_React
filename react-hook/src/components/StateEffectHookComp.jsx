@@ -34,7 +34,7 @@ const StateEffectHookComp = () => {
 
   // 특정한 state값이 바뀔 때 실행하고 싶다면 useEffect를 사용
   useEffect(()=>{
-    console.log("카운트가 증가하였습니다");
+    console.log("카운트가 증가하였습니다"); // 새로고침 때 두 번 출력되는 이유? -> 마운트, 업데이트가 새고의 디폴트값이라서..?
   },[count])
 
   return (
