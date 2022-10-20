@@ -5,16 +5,18 @@ import ReducerCountComp from "./ReducerCountComp";
 import MemoComp from "./MemoComp";
 
 function reducer(state, action){
+  // state 안에 여러개의 값이 있을 때, 이전 값을 유지해주어야 한다
+  // 이전 값을 유지하기 위해 : ... 스프레드 연산자를 추가 !!! 😡😡😡
   switch(action.type){
     case 'increment' :
-      return {count : state.count+1}
+      return {...state, count : state.count+1}
     case 'decrement' :
-      return {count : state.count-1}
+      return {...state, count : state.count-1}
     case 'zero' :
-      return {count: 0}
+      return {...state, count: 0}
     // case 추가
     case 'changeInput':
-      return {input : action.payload} // <- e.target.value 값이 payload에 들어가 있음
+      return {...state, input : action.payload} // <- e.target.value 값이 payload에 들어가 있음
   }
 }
 
