@@ -2,29 +2,21 @@ import { useReducer } from "react";
 import TodoItemComp from "./TodoItemComp";
 
 const initstate = {
-  // todoItem의 형태를 확인 : 현재 1개의 todo값만 가지고 있음
+  // todoitem의 형태를 확인 : 현재 1개의 todo값만 가지고 있음
+  // todoitem: 내용 확인을 위해 작성함
+  /*
   todoitem : {
-    done : true,
+    done : false,
     todo : "확인",
     id : 1
   },
+  */
   // 배열을 통해서 여러개의 todolist 사용
-  todolist : [
-    {
-      done : true,
-      todo : "첫 번째 할 일",
-      id : 1
-    },
-    {
-      done : true,
-      todo : "두 번째 할 일",
-      id : 2
-    }
-  ], 
+  todolist : [ ], 
   // todoItem을 넣을 공간
   // todo값을 입력받을 todoInput
   todoInput : "",
-  countAll : 2,
+  countAll : 0,
 }
 
 function reducer(state, action){
@@ -32,7 +24,7 @@ function reducer(state, action){
     case "checked" :
       return {...state, 
         todoitem : {
-          ...state.todoitem,
+          ...state.todoitem, // 객체가 여러개라서 넣어주는 건가..?
           done: !state.todoitem.done
         }
       }
@@ -65,7 +57,9 @@ function reducer(state, action){
         todo : state.todoInput,
         id :  state.countAll+1,
       })
-      return {...state, todolist : newTodolist3, countAll : state.countAll+1}
+      return {...state, todolist : newTodolist3, countAll : state.countAll+1, todoInput:""}
+      // countAll 이 가능한 이유도 ... concat 때문인건가...?
+      // todoIput 값을 빈 값으로 넣어 버튼 누르고 난 뒤에 input창이 비도록 함
     default : // 다른 값이 들어왔을 때 현재 state를 유지하고 오류를 알림
       console.error("존재하지 않는 action타입 입니다")
       return state;
@@ -77,23 +71,17 @@ const TodoComp = () => {
 
   return (
     <div>
-      <input type="text" onChange={
+
+      <input type="text" value={state.todoInput} onChange={
         (e)=>{dispatch({type: "todoInput", payload : e.target.value})}
         } />
       <button onClick={()=>{dispatch({type: "todoAdd"})}}>+</button>
-      
+
       <ul>
-      <li>
-        {/** TodoItem - 체크여부, 할일, id값(삭제에 필요) */}
-        <input type="checkbox" 
-            checked={state.todoitem.done} 
-            onClick={()=>{dispatch({type: "checked"})}} />
-            {state.todoitem.todo}
-        <button>X</button>
-      </li>
-        {/* TodoItemComp를 만들어서 map을 통해서 내용 출력 */}
-        {state.todolist.map((todoitem)=>(<TodoItemComp key={todoitem.id} todoitem={todoitem} dispatch={dispatch}/>))}
+          {/* TodoItemComp를 만들어서 map을 통해서 내용 출력 */}
+          {state.todolist.map((todoitem)=>(<TodoItemComp key={todoitem.id} todoitem={todoitem} dispatch={dispatch}/>))}
       </ul>
+
     </div>
   );
 }
